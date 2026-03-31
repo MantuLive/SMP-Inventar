@@ -39,9 +39,6 @@ public class InventoryManager {
         loadDatabase();
     }
     
-    /**
-     * Lädt die zentrale Datenbank-Datei
-     */
     private void loadDatabase() {
         if (!databaseFile.exists()) {
             database = new YamlConfiguration();
@@ -50,9 +47,6 @@ public class InventoryManager {
         }
     }
     
-    /**
-     * Speichert die zentrale Datenbank-Datei
-     */
     private void saveDatabase() {
         try {
             database.save(databaseFile);
@@ -61,9 +55,6 @@ public class InventoryManager {
         }
     }
 
-    /**
-     * Speichert das aktuelle Inventar des Spielers für den gegebenen GameMode
-     */
     public void saveInventory(Player player, GameMode fromMode) {
         UUID playerId = player.getUniqueId();
         ItemStack[] inventory = player.getInventory().getContents();
@@ -78,9 +69,6 @@ public class InventoryManager {
         }
     }
 
-    /**
-     * Lädt das gespeicherte Inventar für den Spieler im gegebenen GameMode
-     */
     public void loadInventory(Player player, GameMode toMode) {
         UUID playerId = player.getUniqueId();
         ItemStack[] inventory;
@@ -113,9 +101,6 @@ public class InventoryManager {
         }
     }
 
-    /**
-     * Speichert die Inventare eines Spielers in die zentrale Datenbank
-     */
     public void savePlayerData(UUID playerId) {
         String path = playerId.toString();
 
@@ -140,9 +125,6 @@ public class InventoryManager {
         saveDatabase();
     }
 
-    /**
-     * Lädt die Inventare eines Spielers aus der zentralen Datenbank
-     */
     public void loadPlayerData(UUID playerId) {
         String path = playerId.toString();
 
@@ -192,9 +174,6 @@ public class InventoryManager {
         }
     }
 
-    /**
-     * Speichert alle aktuell geladenen Inventare
-     */
     public void saveAllInventories() {
         for (UUID playerId : survivalInventories.keySet()) {
             savePlayerData(playerId);
@@ -204,9 +183,6 @@ public class InventoryManager {
         }
     }
 
-    /**
-     * Entfernt gespeicherte Inventare aus dem RAM (nicht von der Festplatte)
-     */
     public void clearPlayerData(UUID playerId) {
         survivalInventories.remove(playerId);
         survivalArmor.remove(playerId);

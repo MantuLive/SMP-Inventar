@@ -24,15 +24,12 @@ public class GameModeListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         
-        // Nur für Spieler mit Permission
         if (!player.hasPermission("smpinventar.use")) {
             return;
         }
         
-        // Lade gespeicherte Inventare
         inventoryManager.loadPlayerData(player.getUniqueId());
         
-        // Lade das richtige Inventar basierend auf aktuellem GameMode
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             inventoryManager.loadInventory(player, player.getGameMode());
         }, 1L);
@@ -42,7 +39,6 @@ public class GameModeListener implements Listener {
     public void onGameModeChange(PlayerGameModeChangeEvent event) {
         Player player = event.getPlayer();
         
-        // Nur für Spieler mit Permission
         if (!player.hasPermission("smpinventar.use")) {
             return;
         }
@@ -50,16 +46,12 @@ public class GameModeListener implements Listener {
         GameMode fromMode = player.getGameMode();
         GameMode toMode = event.getNewGameMode();
 
-        // Ignoriere wenn der GameMode gleich bleibt
         if (fromMode == toMode) {
             return;
         }
 
-        // Speichere das aktuelle Inventar
         inventoryManager.saveInventory(player, fromMode);
 
-        // Lade das Inventar für den neuen GameMode
-        // Wird verzögert ausgeführt, damit der GameMode-Wechsel bereits erfolgt ist
         plugin.getServer().getScheduler().runTask(plugin, () -> {
             inventoryManager.loadInventory(player, toMode);
         });
@@ -69,14 +61,11 @@ public class GameModeListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         
-        // Nur für Spieler mit Permission
         if (!player.hasPermission("smpinventar.use")) {
             return;
         }
         
-        // Speichere aktuelles Inventar
         inventoryManager.saveInventory(player, player.getGameMode());
-        // Speichere auf Festplatte
         inventoryManager.savePlayerData(player.getUniqueId());
         // Entferne aus RAM
         inventoryManager.clearPlayerData(player.getUniqueId());
