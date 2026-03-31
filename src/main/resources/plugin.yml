@@ -1,0 +1,11 @@
+name: SMP-Inventar
+version: '${project.version}'
+main: de.smpi.inventar.SMPInventar
+api-version: '1.21'
+description: Separate Creative Inventory Plugin für Paper 1.21+
+author: JJ
+
+permissions:
+  smpinventar.use:
+    description: Erlaubt die Nutzung des separaten Creative Inventars
+    default: false
